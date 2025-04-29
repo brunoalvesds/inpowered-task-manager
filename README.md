@@ -23,22 +23,16 @@ A simple Angular 10 application that demonstrates task management with reactive 
 
 ## Setup
 
-1. Clone the repository:
-
-   ```bash
-     git clone https://github.com/your-username/angular-task-manager.git
-   ```
-
-2. Install dependencies:
+1. Install dependencies:
 
   ```bash
     npm install
   ```
 
-3. Run the development server:
+2. Run the development server:
    
   ```bash
     ng serve
   ```
 
-4. Open http://localhost:4200 in your browser.
+3. Open http://localhost:4200 in your browser.
