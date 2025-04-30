@@ -14,6 +14,7 @@
 
     button {
         box-shadow: none;
+        margin: 0 10px;
     }
 }
 
@@ -115,6 +116,19 @@
         .column {
             width: 100%;
             margin-bottom: 2rem;
+        }
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    /* styles for browsers smaller than 768px; */
+
+    .action-bar {
+        display: block;
+        text-align: center;
+        
+        button {
+            margin-bottom: 1rem;
         }
     }
 }
