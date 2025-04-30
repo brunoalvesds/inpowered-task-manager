@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { TaskCardComponent } from './shared/components/task-card/task-card.component';
+import { AppRoutingModule } from './app-routing-module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { TaskCardComponent } from './shared/components/task-card/task-card.compo
     TaskCardComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
