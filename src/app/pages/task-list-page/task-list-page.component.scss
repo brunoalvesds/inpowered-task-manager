@@ -44,6 +44,10 @@
 .column {
     width: 33%;
 
+    &.hidden {
+        display: none !important;
+    }
+
     p {
         text-align: center;
     }

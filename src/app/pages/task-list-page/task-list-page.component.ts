@@ -49,6 +49,14 @@ export class TaskListPageComponent implements OnInit {
     this.tasks = this.tasks.filter(t => t.id !== task.id);
   }
 
+  isCompletedHidden(): boolean {
+    return this.selectedOption === 'incomplete';
+  }
+
+  isIncompleteHidden(): boolean {
+    return this.selectedOption === 'completed';
+  }
+
   get filteredIncompleteTasks(): Task[] {
     return this.tasks.filter(task =>
       (this.selectedOption === 'all' || this.selectedOption === 'incomplete') && !task.completed

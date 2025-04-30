@@ -31,16 +31,16 @@
 
         <div class="columns-area">
             <!-- Incomplete column -->
-            <div class="column incomplete">
+            <div class="column incomplete" [ngClass]="{ 'hidden': isIncompleteHidden() }">
                 <p>Incomplete</p>
                 <div class="task-list">
-                    <app-task-card *ngFor="let task of filteredIncompleteTasks" [task]="task"
-                        (toggle)="onToggle($event)" (delete)="onDelete($event)"></app-task-card>
+                    <app-task-card *ngFor="let task of filteredIncompleteTasks" [task]="task" (toggle)="onToggle($event)"
+                        (delete)="onDelete($event)"></app-task-card>
                 </div>
             </div>
-
+            
             <!-- Completed column -->
-            <div class="column complete">
+            <div class="column complete" [ngClass]="{ 'hidden': isCompletedHidden() }">
                 <p>Completed</p>
                 <div class="task-list">
                     <app-task-card *ngFor="let task of filteredCompletedTasks" [task]="task" (toggle)="onToggle($event)"
