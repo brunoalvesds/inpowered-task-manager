@@ -33,8 +33,10 @@
                         </app-task-card>
                     </ng-container>
                     <ng-template #noIncomplete>
-                        <div class="empty-state">
-                            <i class="pi pi-info-circle"></i> No incomplete tasks
+                        <div class="empty-state" (click)="addTaskDialogVisible = true">
+                            <i class="pi pi-calendar-times"></i>
+                            <p>No incomplete tasks</p>
+                            <small>You're all caught up! Add new tasks to stay on track.</small>
                         </div>
                     </ng-template>
                 </div>
@@ -54,8 +56,10 @@
                         </app-task-card>
                     </ng-container>
                     <ng-template #noCompleted>
-                        <div class="empty-state">
-                            <i class="pi pi-info-circle"></i> No completed tasks
+                        <div class="empty-state" (click)="addTaskDialogVisible = true">
+                            <i class="pi pi-check-circle"></i>
+                            <p>No completed tasks yet</p>
+                            <small>Stay productive! Your completed tasks will appear here.</small>
                         </div>
                     </ng-template>
                 </div>

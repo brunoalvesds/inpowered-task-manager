@@ -50,3 +50,11 @@
         }
     }
 }
+
+@media only screen and (max-width: 768px) {
+    /* styles for browsers smaller than 768px; */
+
+    .user-header .message h2 {
+        font-size: 1rem;
+    }
+}
