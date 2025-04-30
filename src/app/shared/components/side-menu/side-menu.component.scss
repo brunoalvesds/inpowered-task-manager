@@ -1,0 +1,49 @@
+@import "../../../../assets/variables";
+
+.side-menu {
+    background-color: $dark-blue;
+    display: inline-block;
+    height: 100vh;
+    max-width: 80px;
+    padding: 10px 5px;
+    text-align: center;
+    vertical-align: top;
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        .logo img {
+            max-width: 40px;
+            margin-bottom: 2rem;
+        }
+
+        .menu-item {
+            margin-bottom: 1.5rem;
+
+            a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                color: white;
+                text-decoration: none;
+                transition: color 0.2s ease;
+
+                i {
+                    font-size: 1rem;
+                    margin-bottom: 0.25rem;
+                }
+
+                span {
+                    font-size: 0.75rem;
+                    display: block;
+                }
+
+                &:hover {
+                    color: lighten(white, 10%);
+                }
+            }
+        }
+    }
+}

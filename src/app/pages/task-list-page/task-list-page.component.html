@@ -1,18 +1,9 @@
 <!-- Toolbar -->
-<div class="side-menu">
-    <ul>
-        <li>
-            <a href="#">
-                <div class="logo">
-                    <img src="../assets/logo-inpowered.png" alt="Logo InPowered">
-                </div>
-            </a>
-        </li>
-    </ul>
+ <app-side-menu></app-side-menu>
 
-</div>
+<!-- Main content -->
 <div class="content-area">
-    <header class="main-header">
+    <header class="user-header">
         <div class="message">
             <h2>Welcome back, John!</h2>
         </div>
@@ -60,7 +51,7 @@
 
         <div class="columns-area">
             <div class="column incomplete">
-                <p>Incomplete</p>
+                <p>Incomplete Tasks</p>
                 <div class="task-list">
                     <app-task-card *ngFor="let task of incompleteTasks" [task]="task" (toggle)="onToggle($event)"
                         (delete)="onDelete($event)">
@@ -69,7 +60,7 @@
             </div>
         
             <div class="column complete" *ngIf="!isCompletedHidden">
-                <p>Completed</p>
+                <p>Completed Tasks</p>
                 <div class="task-list">
                     <app-task-card *ngFor="let task of completedTasks" [task]="task" (toggle)="onToggle($event)"
                         (delete)="onDelete($event)">

@@ -13,13 +13,15 @@ import { ButtonModule } from 'primeng/button';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
+import { SideMenuComponent } from './shared/components/side-menu/side-menu.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskListPageComponent,
-    TaskCardComponent
+    TaskCardComponent,
+    SideMenuComponent
   ],
   imports: [
     AppRoutingModule,

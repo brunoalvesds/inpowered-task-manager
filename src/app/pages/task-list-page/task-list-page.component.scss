@@ -1,26 +1,12 @@
 @import "../../../assets/variables";
 
-.side-menu {
-    background-color: $dark-blue;
-    display: inline-block;
-    height: 100vh;
-    max-width: 80px;
-    padding: 10px;
-    text-align: center;
-    vertical-align: top;
-
-    .logo img {
-        max-width: 40px;
-    }
-}
-
 .content-area {
     display: inline-block;
     padding: 0 15px;
-    width: calc(100% - 60px);
+    width: calc(100% - 70px);
 }
 
-.main-header {
+.user-header {
     display: block;
     padding: 25px 0;
 }
