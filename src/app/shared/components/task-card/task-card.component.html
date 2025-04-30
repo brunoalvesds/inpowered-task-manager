@@ -1,0 +1,17 @@
+<div class="task-card" [class.completed]="task?.completed">
+    <div class="task-header">
+        <h4>{{ task?.title }}</h4>
+        <button class="delete-button" (click)="delete.emit(task)">
+            <i class="pi pi-trash"></i>
+        </button>
+    </div>
+
+    <p class="task-desc">{{ task?.description }}</p>
+
+    <div class="task-actions">
+        <label>
+            <input type="checkbox" [checked]="task?.completed" (change)="toggle.emit(task)" />
+            <span>Mark as completed</span>
+        </label>
+    </div>
+</div>

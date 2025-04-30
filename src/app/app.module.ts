@@ -10,11 +10,13 @@ import { TaskListPageComponent } from './pages/task-list-page/task-list-page.com
 import { ButtonModule } from 'primeng/button';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { DropdownModule } from 'primeng/dropdown';
+import { TaskCardComponent } from './shared/components/task-card/task-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskListPageComponent
+    TaskListPageComponent,
+    TaskCardComponent
   ],
   imports: [
     BrowserModule,

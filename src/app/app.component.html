@@ -25,15 +25,26 @@
     <div class="action-bar">
       <button pButton type="button" class="p-button-raised p-button-rounded p-button-success" icon="pi pi-plus"
         label="Add Task"></button>
-      <p-dropdown [options]="optionsList" [(ngModel)]="selectedOption" placeholder="Filter by" optionLabel="status"
+      <p-dropdown [options]="filterOptions" [(ngModel)]="selectedOption" placeholder="Filter by"
         [showClear]="true"></p-dropdown>
     </div>
     
-    <div class="task-list">
-      <div class="column">
-        <div class="task-card">
-          <h4>Task title</h4>
-          <p><span>Desc: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span></p>
+    <div class="columns-area">
+      <!-- Incomplete column -->
+      <div class="column incomplete">
+        <p>Incomplete</p>
+        <div class="task-list">
+          <app-task-card *ngFor="let task of filteredIncompleteTasks" [task]="task" (toggle)="onToggle($event)"
+            (delete)="onDelete($event)"></app-task-card>
+        </div>
+      </div>
+      
+      <!-- Completed column -->
+      <div class="column complete">
+        <p>Completed</p>
+        <div class="task-list">
+          <app-task-card *ngFor="let task of filteredCompletedTasks" [task]="task" (toggle)="onToggle($event)"
+            (delete)="onDelete($event)"></app-task-card>
         </div>
       </div>
     </div>

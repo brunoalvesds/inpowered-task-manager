@@ -35,37 +35,23 @@
     }
 }
 
-.column {
-    border: 2px dashed $light-gray;
-    border-radius: 10px;
-    height: 75vh;
-    padding: 10px;
-    width: 33%;
-}
-
-.task-card {
-    background-color: white;
-    border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+.columns-area {
+    display: flex;
+    gap: 16px;
     padding: 16px;
-    margin-bottom: 16px;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
-
-    h4 {
-        margin: 0 0 40px 0;
-        font-size: 18px;
-    }
-
-    span {
-        color: gray;
-    }
 }
 
-.task-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
-}
+.column {
+    width: 33%;
 
-.task-card.completed {
-    opacity: 0.5;
+    p {
+        text-align: center;
+    }
+
+    .task-list {
+        border: 2px dashed $light-gray;
+        border-radius: 10px;
+        height: 60vh;
+        padding: 10px;
+    }
 }
