@@ -1,0 +1,24 @@
+<p-dialog header="Add New Task" [(visible)]="visible" [modal]="true" [closable]="true" [dismissableMask]="true"
+    [style]="{ width: '400px' }" (onHide)="close()">
+    <div class="p-fluid">
+        <!-- Title Field -->
+        <div class="p-field">
+            <label for="title">Title</label>
+            <input id="title" type="text" pInputText [(ngModel)]="title" placeholder="Enter task title" />
+        </div>
+
+        <!-- Description Field -->
+        <div class="p-field">
+            <label for="description">Description</label>
+            <textarea id="description" rows="3" pInputTextarea [(ngModel)]="description"
+                placeholder="Optional description"></textarea>
+        </div>
+    </div>
+
+    <!-- Footer with buttons -->
+    <p-footer>
+        <button pButton label="Cancel" icon="pi pi-times" class="p-button-text" (click)="close()"></button>
+        <button pButton label="Add" icon="pi pi-check" class="p-button-success" (click)="onAdd()"
+            [disabled]="!title.trim()"></button>
+    </p-footer>
+</p-dialog>

@@ -34,33 +34,34 @@ export class TaskListPageComponent implements OnInit {
   // Method to load tasks based on the selected filter
   loadFilteredTasks(): void {
     const grouped = this.taskService.getGroupedTasks(this.selectedOption);
-    this.completedTasks = grouped.completed;
-    this.incompleteTasks = grouped.incomplete;
 
-    // If 'completed' is selected, hide completed tasks
-    this.isCompletedHidden = this.selectedOption !== 'all';
+    switch (this.selectedOption) {
+      case 'completed':
+        this.completedTasks = grouped.completed;
+        this.incompleteTasks = [];
+        break;
+      case 'incomplete':
+        this.incompleteTasks = grouped.incomplete;
+        this.completedTasks = [];
+        break;
+      default:
+        this.completedTasks = grouped.completed;
+        this.incompleteTasks = grouped.incomplete;
+        break;
+    }
   }
 
   // Method to handle task addition
-  addTask(): void {
-    if (!this.newTaskTitle) return;
-
+  addTask(taskData: { title: string, description: string }): void {
     const newTask: Task = {
       id: Date.now(),
-      title: this.newTaskTitle.trim(),
-      description: this.newTaskDescription.trim(),
+      title: taskData.title,
+      description: taskData.description,
       completed: false
     };
 
     this.taskService.addTask(newTask);
-
-    // Clear fields and close dialog
-    this.newTaskTitle = '';
-    this.newTaskDescription = '';
-    this.addTaskDialogVisible = false;
-
-    // Reload tasks after adding a new one
-    this.loadFilteredTasks();
+    this.loadFilteredTasks(); // Reload
   }
 
   // Method to toggle task completion status

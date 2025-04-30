@@ -1,5 +1,5 @@
 <!-- Toolbar -->
- <app-side-menu></app-side-menu>
+<app-side-menu></app-side-menu>
 
 <!-- Main content -->
 <div class="content-area">
@@ -9,55 +9,55 @@
         <div class="action-bar">
             <button pButton type="button" class="p-button-raised p-button-rounded p-button-success" icon="pi pi-plus"
                 label="Add Task" (click)="addTaskDialogVisible = true"></button>
-            <p-dropdown [options]="filterOptions" [(ngModel)]="selectedOption" placeholder="Filter by"
-                [showClear]="true"></p-dropdown>
-
-                <!-- Dialog to add a task -->
-                <p-dialog header="Add New Task" [(visible)]="addTaskDialogVisible" [modal]="true" [closable]="true"
-                    [dismissableMask]="true" [style]="{ width: '400px' }">
-                    <div class="p-fluid">
-                        <div class="p-formgrid p-grid">
-                            <!-- Title Field -->
-                            <div class="p-field p-col-12">
-                                <label for="title">Title</label>
-                                <input id="title" type="text" pInputText [(ngModel)]="newTaskTitle" />
-                            </div>
-                
-                            <!-- Description Field -->
-                            <div class="p-field p-col-12">
-                                <label for="description">Description</label>
-                                <textarea id="description" rows="3" pInputTextarea [(ngModel)]="newTaskDescription"
-                                    autoResize="true"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <!-- Footer with buttons -->
-                    <ng-template pTemplate="footer">
-                        <button pButton label="Cancel" icon="pi pi-times" (click)="addTaskDialogVisible = false"
-                            class="p-button-text"></button>
-                        <button pButton label="Add" icon="pi pi-check" (click)="addTask()" [disabled]="!newTaskTitle.trim()"
-                            class="p-button-success"></button>
-                    </ng-template>
-                </p-dialog>
+            <p-dropdown [options]="filterOptions" [(ngModel)]="selectedOption" placeholder="Filter by" [showClear]="true"
+                (onChange)="onFilterChange()">
+            </p-dropdown>
         </div>
 
+        <!-- Dialog to add a task -->
+        <app-task-dialog [(visible)]="addTaskDialogVisible" [(title)]="newTaskTitle" [(description)]="newTaskDescription"
+            (taskAdd)="addTask($event)"></app-task-dialog>
+
         <div class="columns-area">
-            <div class="column incomplete">
-                <p>Incomplete Tasks</p>
+            <!-- Incomplete Tasks Column -->
+            <div class="column incomplete" *ngIf="selectedOption === 'all' || selectedOption === 'incomplete'">
+                <div class="column-header">
+                    <i class="pi pi-clock"></i>
+                    <span>Incomplete Tasks</span>
+                </div>
+        
                 <div class="task-list">
-                    <app-task-card *ngFor="let task of incompleteTasks" [task]="task" (toggle)="onToggle($event)"
-                        (delete)="onDelete($event)">
-                    </app-task-card>
+                    <ng-container *ngIf="incompleteTasks.length > 0; else noIncomplete">
+                        <app-task-card *ngFor="let task of incompleteTasks" [task]="task" (toggle)="onToggle($event)"
+                            (delete)="onDelete($event)">
+                        </app-task-card>
+                    </ng-container>
+                    <ng-template #noIncomplete>
+                        <div class="empty-state">
+                            <i class="pi pi-info-circle"></i> No incomplete tasks
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         
-            <div class="column complete" *ngIf="!isCompletedHidden">
-                <p>Completed Tasks</p>
+            <!-- Completed Tasks Column -->
+            <div class="column complete" *ngIf="selectedOption === 'all' || selectedOption === 'completed'">
+                <div class="column-header">
+                    <i class="pi pi-check-circle"></i>
+                    <span>Completed Tasks</span>
+                </div>
+        
                 <div class="task-list">
-                    <app-task-card *ngFor="let task of completedTasks" [task]="task" (toggle)="onToggle($event)"
-                        (delete)="onDelete($event)">
-                    </app-task-card>
+                    <ng-container *ngIf="completedTasks.length > 0; else noCompleted">
+                        <app-task-card *ngFor="let task of completedTasks" [task]="task" (toggle)="onToggle($event)"
+                            (delete)="onDelete($event)">
+                        </app-task-card>
+                    </ng-container>
+                    <ng-template #noCompleted>
+                        <div class="empty-state">
+                            <i class="pi pi-info-circle"></i> No completed tasks
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </div>

@@ -15,6 +15,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { SideMenuComponent } from './shared/components/side-menu/side-menu.component';
 import { UserHeaderComponent } from './shared/components/user-header/user-header.component';
+import { TaskDialogComponent } from './shared/components/task-dialog/task-dialog.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { UserHeaderComponent } from './shared/components/user-header/user-header
     TaskListPageComponent,
     TaskCardComponent,
     SideMenuComponent,
-    UserHeaderComponent
+    UserHeaderComponent,
+    TaskDialogComponent
   ],
   imports: [
     AppRoutingModule,

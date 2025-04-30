@@ -3,11 +3,13 @@
 .content-area {
     display: inline-block;
     width: calc(100% - 70px);
+    margin-left: 70px;
 }
 
 .action-bar {
     display: flex;
     justify-content: space-between;
+    padding: 0 40px;
     margin-bottom: 50px;
 
     button {
@@ -17,64 +19,61 @@
 
 .columns-area {
     display: flex;
-    gap: 16px;
-    padding: 16px;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 0 1rem;
 }
 
-.column {
-    width: 33%;
-
-    &.hidden {
-        display: none !important;
-    }
-
-    p {
-        text-align: center;
-    }
-
-    .task-list {
-        border: 2px dashed $light-gray;
-        border-radius: 10px;
-        height: 60vh;
-        padding: 10px;
-    }
+.column-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    color: $dark-blue;
+    margin-bottom: 1rem;
 }
 
-::ng-deep .p-dialog {
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+.column-header i {
+    font-size: 1.2rem;
+    color: $light-gray;
+}
 
-    .p-dialog-header {
-        font-size: 1.25rem;
-        font-weight: 600;
-        padding: 1rem 1.5rem;
-    }
+.column.incomplete {
+    width: 48%;
+}
 
-    .p-dialog-content {
-        padding: 1.5rem;
-        background-color: #f9f9f9;
+.column.incomplete .column-header i {
+    color: #ff6f61;
+}
 
-        .p-field {
-            margin-bottom: 1.25rem;
+.column.complete {
+    width: 48%;
+}
 
-            label {
-                font-weight: 500;
-                margin-bottom: 0.5rem;
-                display: block;
-                color: $dark-gray;
-            }
+.column.complete .column-header i {
+    color: #4caf50;
+}
 
-            input,
-            textarea {
-                width: 100%;
-            }
-        }
-    }
+.empty-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    color: $light-gray;
+    font-size: 1.25rem;
+}
 
-    .p-dialog-footer {
-        padding: 1rem 1.5rem;
-        display: flex;
-        justify-content: flex-end;
-        gap: 0.75rem;
-    }
+.empty-column i {
+    font-size: 3rem;
+}
+
+.task-list {
+    border: 2px dashed $light-gray;
+    border-radius: 10px;
+    height: 60vh;
+    padding: 1rem;
+    max-height: 70vh;
+    overflow-y: scroll;
 }
