@@ -6,47 +6,77 @@ import { Task } from '../../models/task.model';
   providedIn: 'root'
 })
 export class TaskService {
-  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  // BehaviorSubject is used to store and observe the tasks in real-time
+  private tasksSubject = new BehaviorSubject<Task[]>(this.getTasksFromLocalStorage());
+
+  // Observable to be used in components to subscribe to task updates
   tasks$ = this.tasksSubject.asObservable();
 
-  constructor() {
-    // Simulated initial data
-    const initialTasks: Task[] = [
-      { id: 1, title: 'Buy milk', description: 'Low-fat milk', completed: false },
-      { id: 2, title: 'Workout', description: '30 mins treadmill', completed: true },
-      { id: 3, title: 'Study Angular', description: 'Components and Services', completed: false }
-    ];
-    this.tasksSubject.next(initialTasks);
+  constructor() { }
+
+  // Retrieve tasks from localStorage or initialize if not available
+  private getTasksFromLocalStorage(): Task[] {
+    const tasks = localStorage.getItem('tasks');
+    return tasks ? JSON.parse(tasks) : [];
   }
 
-  getTasks(): Task[] {
-    return this.tasksSubject.getValue();
+  // Save tasks to localStorage to persist them even after a page reload
+  private saveTasksToLocalStorage(tasks: Task[]): void {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
-  updateTask(updated: Task): void {
-    const updatedList = this.getTasks().map(task =>
-      task.id === updated.id ? { ...task, completed: updated.completed } : task
-    );
-    this.tasksSubject.next(updatedList);
+  // Add a new task to the list
+  addTask(newTask: Task): void {
+    const currentTasks = this.getTasksFromLocalStorage();
+    const updatedTasks = [...currentTasks, newTask]; // Add the new task to the current list
+    this.saveTasksToLocalStorage(updatedTasks); // Save updated tasks to localStorage
+    this.tasksSubject.next(updatedTasks); // Notify subscribers about the update
   }
 
+  // Delete a task from the list
   deleteTask(taskToDelete: Task): void {
-    const updatedList = this.getTasks().filter(t => t.id !== taskToDelete.id);
-    this.tasksSubject.next(updatedList);
+    const currentTasks = this.getTasksFromLocalStorage();
+    const updatedTasks = currentTasks.filter(task => task.id !== taskToDelete.id); // Filter out the deleted task
+    this.saveTasksToLocalStorage(updatedTasks); // Save updated tasks to localStorage
+    this.tasksSubject.next(updatedTasks); // Notify subscribers about the update
   }
 
-  filterTasksByStatus(status: 'all' | 'completed' | 'incomplete'): Task[] {
-    const tasks = this.getTasks();
-    if (status === 'completed') return tasks.filter(t => t.completed);
-    if (status === 'incomplete') return tasks.filter(t => !t.completed);
-    return tasks;
+  // Update a task (e.g., mark as completed or incomplete)
+  updateTask(updatedTask: Task): void {
+    const currentTasks = this.getTasksFromLocalStorage();
+    const updatedTasks = currentTasks.map(task =>
+      task.id === updatedTask.id ? updatedTask : task // Update the task if IDs match
+    );
+    this.saveTasksToLocalStorage(updatedTasks); // Save updated tasks to localStorage
+    this.tasksSubject.next(updatedTasks); // Notify subscribers about the update
   }
 
-  getGroupedTasks(status: 'all' | 'completed' | 'incomplete'): { completed: Task[]; incomplete: Task[] } {
-    const filtered = this.filterTasksByStatus(status);
+  // Retrieve tasks based on the selected filter ('all', 'completed', or 'incomplete')
+  getGroupedTasks(filter: 'all' | 'completed' | 'incomplete') {
+    const tasks = this.getTasksFromLocalStorage();
+    let filteredTasks;
+
+    switch (filter) {
+      case 'completed':
+        filteredTasks = tasks.filter(task => task.completed); // Filter completed tasks
+        break;
+      case 'incomplete':
+        filteredTasks = tasks.filter(task => !task.completed); // Filter incomplete tasks
+        break;
+      default:
+        filteredTasks = tasks; // Return all tasks if no filter is applied
+        break;
+    }
+
+    // Return tasks grouped into completed and incomplete
     return {
-      completed: filtered.filter(t => t.completed),
-      incomplete: filtered.filter(t => !t.completed)
+      completed: filteredTasks.filter(task => task.completed),
+      incomplete: filteredTasks.filter(task => !task.completed)
     };
+  }
+
+  // Return all tasks (can be used for direct observation or updating)
+  getTasks(): Task[] {
+    return this.getTasksFromLocalStorage();
   }
 }

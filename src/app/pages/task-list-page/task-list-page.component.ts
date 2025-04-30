@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from 'src/app/shared/models/task.model';
+import { Task } from '../../shared/models/task.model';
+import { TaskService } from 'src/app/shared/services/task/task.service';
 
 @Component({
   selector: 'app-task-list-page',
@@ -7,65 +8,79 @@ import { Task } from 'src/app/shared/models/task.model';
   styleUrls: ['./task-list-page.component.scss']
 })
 export class TaskListPageComponent implements OnInit {
+  addTaskDialogVisible = false;
+  newTaskTitle = '';
+  newTaskDescription = '';
 
   filterOptions = [
     { label: 'All', value: 'all' },
     { label: 'Completed', value: 'completed' },
     { label: 'Incomplete', value: 'incomplete' }
   ];
-
   selectedOption: 'all' | 'completed' | 'incomplete' = 'all';
-  tasks: Task[] = [];
 
-  ngOnInit() {
-    // Exemplo de tarefas
-    this.tasks = [
-      {
-        id: 1,
-        title: 'Buy milk',
-        description: 'Go to the grocery store and buy low-fat milk.',
-        completed: false
-      },
-      {
-        id: 2,
-        title: 'Workout',
-        description: '30 minutes of treadmill running.',
-        completed: true
-      },
-      {
-        id: 3,
-        title: 'Study Angular',
-        description: 'Review components, inputs/outputs, and services.',
-        completed: false
-      }
-    ];
+  completedTasks: Task[] = [];
+  incompleteTasks: Task[] = [];
+
+  // New property to control whether completed tasks are hidden or not
+  isCompletedHidden = false;
+
+  constructor(private taskService: TaskService) { }
+
+  ngOnInit(): void {
+    this.loadFilteredTasks(); // Initial load of tasks
   }
 
-  onToggle(task: Task) {
-    task.completed = !task.completed;
+  // Method to load tasks based on the selected filter
+  loadFilteredTasks(): void {
+    const grouped = this.taskService.getGroupedTasks(this.selectedOption);
+    this.completedTasks = grouped.completed;
+    this.incompleteTasks = grouped.incomplete;
+
+    // If 'completed' is selected, hide completed tasks
+    this.isCompletedHidden = this.selectedOption !== 'all';
   }
 
-  onDelete(task: Task) {
-    this.tasks = this.tasks.filter(t => t.id !== task.id);
+  // Method to handle task addition
+  addTask(): void {
+    if (!this.newTaskTitle) return;
+
+    const newTask: Task = {
+      id: Date.now(),
+      title: this.newTaskTitle.trim(),
+      description: this.newTaskDescription.trim(),
+      completed: false
+    };
+
+    this.taskService.addTask(newTask);
+
+    // Clear fields and close dialog
+    this.newTaskTitle = '';
+    this.newTaskDescription = '';
+    this.addTaskDialogVisible = false;
+
+    // Reload tasks after adding a new one
+    this.loadFilteredTasks();
   }
 
-  isCompletedHidden(): boolean {
-    return this.selectedOption === 'incomplete';
+  // Method to toggle task completion status
+  onToggle(task: Task): void {
+    this.taskService.updateTask({ ...task, completed: !task.completed });
+    // Reload tasks after status update
+    this.loadFilteredTasks();
   }
 
-  isIncompleteHidden(): boolean {
-    return this.selectedOption === 'completed';
+  // Method to delete a task
+  onDelete(task: Task): void {
+    this.taskService.deleteTask(task);
+
+    // Reload tasks after deletion
+    this.loadFilteredTasks(); 
   }
 
-  get filteredIncompleteTasks(): Task[] {
-    return this.tasks.filter(task =>
-      (this.selectedOption === 'all' || this.selectedOption === 'incomplete') && !task.completed
-    );
-  }
-
-  get filteredCompletedTasks(): Task[] {
-    return this.tasks.filter(task =>
-      (this.selectedOption === 'all' || this.selectedOption === 'completed') && task.completed
-    );
+  // Method to handle filter changes
+  onFilterChange(): void {
+    // Reload tasks based on new filter
+    this.loadFilteredTasks();
   }
 }
