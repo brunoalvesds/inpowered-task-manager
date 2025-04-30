@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'inpowered-task-manager';
+  optionsList = [
+    {status: "All"},
+    { status: "Complete" },
+    { status: "Incomplete" }
+  ]
+  selectedOption: string;
 }
