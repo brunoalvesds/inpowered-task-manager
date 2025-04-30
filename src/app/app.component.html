@@ -22,14 +22,13 @@
   </header>
   
   <div class="content" role="main">
-    <div class="actions">
+    <div class="action-bar">
+      <button pButton type="button" class="p-button-raised p-button-rounded p-button-success" icon="pi pi-plus"
+        label="Add Task"></button>
       <p-dropdown [options]="optionsList" [(ngModel)]="selectedOption" placeholder="Filter by" optionLabel="status"
         [showClear]="true"></p-dropdown>
     </div>
-    <button class="rounded-button">
-      <i icon="pi pi-plus" iconPos="left"></i>
-      Add Task
-    </button>
+    
     <div class="task-list">
       <div class="column">
         <div class="task-card">
